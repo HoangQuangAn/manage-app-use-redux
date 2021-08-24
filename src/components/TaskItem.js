@@ -3,10 +3,7 @@
 import { Component } from 'react';
 
 class TaskItemm extends Component {
-    constructor(props){
-        super(props);
-    }
-
+  
     onUpdateStatus=()=>{
         this.props.onUpdateStatus( this.props.task.id)
     }

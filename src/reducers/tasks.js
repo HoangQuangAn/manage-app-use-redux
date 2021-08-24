@@ -29,7 +29,6 @@ var myReducer=(state=initialState, action)=>{
       
         default:
             return state;
-            break;
     }
 }
 

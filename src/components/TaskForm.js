@@ -2,6 +2,7 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import * as action from '../actions';
+import {close_form} from '../actions/index'
 
 class TaskForm extends Component {
     constructor(props){
@@ -13,10 +14,6 @@ class TaskForm extends Component {
       
         }
     }
-    onCloseForm=()=>{
-        this.props.onCloseForm();
-    }
-
     onHandleInput=(event)=>{
             var name =event.target.name;
             var value = event.target.value;
@@ -76,7 +73,7 @@ class TaskForm extends Component {
                 <div className="panel-heading">
                     <h3 className="panel-title">
                         {id===''?"Thêm Công Việc": "Thay Đổi Công Việc"} 
-                        <span className="fa fa-times-circle text-right" onClick={this.onCloseForm}>
+                        <span className="fa fa-times-circle text-right" onClick={this.props.OnCloseForm}>
 
                         </span>
                     </h3>
@@ -115,8 +112,6 @@ class TaskForm extends Component {
                             <button type="button" className="btn btn-danger" onClick={this.Clear}>
                                 <i className="fas fa-times-circle"></i> Cancle
                             </button>
-                            
-                            
                         </div>
                     </form>
                     
@@ -136,6 +131,9 @@ const mapDispatchToProps=(dispatch,props)=>{
     return{
         onAddTask: (task)=>{
             dispatch(action.add_task(task));
+        },
+        OnCloseForm:()=>{
+            dispatch(close_form())
         }
     }
 }

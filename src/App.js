@@ -4,13 +4,13 @@ import { Component } from 'react';
 import TaskForm from './components/TaskForm';
 import Control from './components/control';
 import TaskList from './components/TaskList';
-import _ from 'lodash'
+import { connect } from 'react-redux';
+import * as types from './constants/ActionTypes'
+import { close_form, open_form, toggle_form } from './actions';
 class App extends Component {
     constructor(props){
         super(props);
         this.state={
-            // tasks:[],// id : unique, name , status
-            isDisplayForm:false,
             taskEditing:null,
             filter:{
                 name:'',
@@ -20,34 +20,6 @@ class App extends Component {
             sortBy:'',
             sortValue : 1    
         }
-    }
-
-   
-    ToggleForm=()=>{
-        if(this.state.isDisplayForm && this.state.taskEditing!==null){
-            this.setState({
-                isDisplayForm:true,
-                taskEditing:null
-            });
-        }
-        else{
-            this.setState({
-                isDisplayForm:!this.state.taskEditing,
-                taskEditing:null
-            })
-        }
-    }
-
-    onCloseForm=()=>{
-        this.setState({
-            isDisplayForm:!this.state.isDisplayForm
-        })
-    }
-
-    onTurnOnForm=()=>{
-        this.setState({
-            isDisplayForm:true
-        })
     }
 
     onSubmit=(data)=>{
@@ -63,7 +35,7 @@ class App extends Component {
         }
         else{
             var {tasks}= this.state;
-            tasks.forEach((task, index)=>{
+            tasks.forEach((task)=>{
                 if(task.id===data.id){
                     task.name =data.name;
                     task.status=data.status;
@@ -175,11 +147,10 @@ class App extends Component {
         var {
             isDisplayForm,
             taskEditing, 
-            filter,
-            keyWord,
             sortBy,
             sortValue
         }= this.state;
+        var {DisPlayForm}= this.props;
        
         // if(filter){
         //     if(filter.name){
@@ -218,7 +189,7 @@ class App extends Component {
 
         // }
 
-        var elmTaskForm=isDisplayForm===true? <TaskForm 
+        var elmTaskForm=DisPlayForm===true? <TaskForm 
                                                     taskEditing={taskEditing}
                                                     onCloseForm={this.onCloseForm}
                                                     onSubmit={this.onSubmit}
@@ -234,9 +205,9 @@ class App extends Component {
                         {/* Form */}
                         {elmTaskForm}
                     </div>
-                    <div className={isDisplayForm===true?"col-xs-8 col-sm-8 col-md-8 col-lg-8":"col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
+                    <div className={DisPlayForm===true?"col-xs-8 col-sm-8 col-md-8 col-lg-8":"col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
                         <button type="button" className="btn btn-primary" 
-                            onClick={this.ToggleForm}>
+                            onClick={this.props.OnToggleForm}>
                             <i className="far fa-plus-circle"></i> Add Task
                         </button>
                        
@@ -268,4 +239,21 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapStateToProps = state=>{
+    return{
+        DisPlayForm: state.form
+    }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        // OnOpenForm:()=>{
+        //     dispatch(open_form())
+        // }
+     
+        OnToggleForm:()=>{
+            dispatch(toggle_form())
+        }
+    }
+  }
+export default connect(mapStateToProps, mapDispatchToProps)(App);
