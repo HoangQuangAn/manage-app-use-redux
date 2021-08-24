@@ -9,7 +9,7 @@ class App extends Component {
     constructor(props){
         super(props);
         this.state={
-            tasks:[],// id : unique, name , status
+            // tasks:[],// id : unique, name , status
             isDisplayForm:false,
             taskEditing:null,
             filter:{
@@ -22,21 +22,7 @@ class App extends Component {
         }
     }
 
-    componentWillMount(){
-        if(localStorage && localStorage.getItem('tasks'))
-        {
-            var tasksLocalStorage = JSON.parse(localStorage.getItem('tasks'));
-            this.setState({
-                tasks:tasksLocalStorage
-            });
-        }        
-    }
-    
-    generateID=()=>{
-        var randomstring = require("randomstring");
-        return randomstring.generate();
-    }
-
+   
     ToggleForm=()=>{
         if(this.state.isDisplayForm && this.state.taskEditing!==null){
             this.setState({
@@ -187,7 +173,6 @@ class App extends Component {
 
     render(){
         var {
-            tasks,
             isDisplayForm,
             taskEditing, 
             filter,
@@ -196,42 +181,42 @@ class App extends Component {
             sortValue
         }= this.state;
        
-        if(filter){
-            if(filter.name){
-                tasks=tasks.filter((task)=>{
-                     return  task.name.toLowerCase().indexOf(filter.name.toLowerCase())!==-1
-                })
-            }
-            tasks=tasks.filter((task)=>{
-                if(filter.status ===-1) {
-                    return task
-                }
-                else{
-                    return task.status===(filter.status===1 ? true: false);
-                }
-            })
-        }
+        // if(filter){
+        //     if(filter.name){
+        //         tasks=tasks.filter((task)=>{
+        //              return  task.name.toLowerCase().indexOf(filter.name.toLowerCase())!==-1
+        //         })
+        //     }
+        //         // tasks=tasks.filter((task)=>{
+        //         //     if(filter.status ===-1) {
+        //         //         return task
+        //         //     }
+        //         //     else{
+        //         //         return task.status===(filter.status===1 ? true: false);
+        //         //     }
+        //         // })
+        // }
 
-        if(keyWord ){
-            tasks=tasks.filter((task)=>{
-                return  task.name.toLowerCase().indexOf(keyWord.toLowerCase())!==-1
-           })
-        }
+        // if(keyWord ){
+        //     tasks=tasks.filter((task)=>{
+        //         return  task.name.toLowerCase().indexOf(keyWord.toLowerCase())!==-1
+        //    })
+        // }
 
-        if(sortBy==='name'){
-            tasks.sort((a,b)=>{
-                if(a.name>b.name) return sortValue;
-                else if (a.name<b.name) return -sortValue ;
-                else return 0;
-            })
-        }else{
-            tasks.sort((a,b)=>{
-                if(a.status>b.status) return -sortValue;
-                else if (a.status<b.status) return sortValue ;
-                else return 0;
-            })
+        // if(sortBy==='name'){
+        //     tasks.sort((a,b)=>{
+        //         if(a.name>b.name) return sortValue;
+        //         else if (a.name<b.name) return -sortValue ;
+        //         else return 0;
+        //     })
+        // }else{
+        //     tasks.sort((a,b)=>{
+        //         if(a.status>b.status) return -sortValue;
+        //         else if (a.status<b.status) return sortValue ;
+        //         else return 0;
+        //     })
 
-        }
+        // }
 
         var elmTaskForm=isDisplayForm===true? <TaskForm 
                                                     taskEditing={taskEditing}
@@ -269,7 +254,6 @@ class App extends Component {
                                 <TaskList 
                                     onUpdateTask={this.onUpdateTask}
                                     onUpdateStatus={this.onUpdateStatus}
-                                    tasks={tasks}
                                     onDeleteItem={this.onDeleteItem}
                                     onFilter={this.onFilter}
                                     />

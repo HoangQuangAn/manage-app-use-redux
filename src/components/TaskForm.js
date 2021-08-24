@@ -1,5 +1,7 @@
 
 import { Component } from 'react';
+import { connect } from 'react-redux';
+import * as action from '../actions';
 
 class TaskForm extends Component {
     constructor(props){
@@ -35,7 +37,7 @@ class TaskForm extends Component {
 
     onSubmit=(event)=>{
         event.preventDefault();
-        this.props.onSubmit(this.state);
+        this.props.onAddTask(this.state);
         this.Clear();
     }
     componentWillMount(){
@@ -65,6 +67,8 @@ class TaskForm extends Component {
             })
         }
     }
+
+    
     render(){
         var {id}=this.state;
         return (
@@ -121,5 +125,19 @@ class TaskForm extends Component {
         );
     }
 }
+const mapStateToProps=state=>{
+    return{
 
-export default TaskForm;
+    }
+}
+
+
+const mapDispatchToProps=(dispatch,props)=>{
+    return{
+        onAddTask: (task)=>{
+            dispatch(action.add_task(task));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskForm);
