@@ -27,3 +27,9 @@ export const open_form=()=>{
         type:type.OPEN_FORM
     }
 }
+export const update_status_task=(id)=>{
+    return{
+        type:type.UPDATE_STATUS_TASK,
+        id
+    }
+}

@@ -1,20 +1,22 @@
-
-
 import { Component } from 'react';
+import { connect } from 'react-redux';
+import { update_status_task } from '../actions';
 
 class TaskItemm extends Component {
   
     onUpdateStatus=()=>{
-        this.props.onUpdateStatus( this.props.task.id)
+        this.props.UpdateStatus( this.props.task.id)
     }
     
     onDeleteItem=()=>{
+        console.log(this.props.task.id);
         this.props.onDeleteItem(this.props.task.id)
     }
 
     onUpdateTask=()=>{
         this.props.onUpdateTask(this.props.task.id)
     }
+    
     render(){
         var {task, index}=this.props;
         return (
@@ -50,4 +52,18 @@ class TaskItemm extends Component {
     }
 }
 
-export default TaskItemm;
+const mapStateToProps=state=>{
+    return{
+        
+    }
+}
+
+const mapDispatchToProps=(dispatch,props)=>{
+    return{
+        UpdateStatus:(id)=>{
+            dispatch(update_status_task(id))
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(TaskItemm);

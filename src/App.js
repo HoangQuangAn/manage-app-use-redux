@@ -54,34 +54,6 @@ class App extends Component {
         console.log(data);
     }
     
-    onUpdateStatus=(id)=>{
-        var {tasks}=this.state;
-        tasks.forEach((task, index)=>{
-            if(task.id===id){
-                task.status=!task.status
-            }
-        });
-
-        this.setState({
-            tasks:tasks
-        })
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-       
-    }
-
-
-    findIndex=(id)=>{
-        var {tasks}= this.state;
-        tasks.forEach((task, index)=>{
-            if(task.id===id){
-                // console.log(index);
-                return index;
-            }
-            else{
-                return -1;
-            }
-        })
-    }
 
     onDeleteItem=(id)=>{
         var {tasks}=this.state;
@@ -145,7 +117,6 @@ class App extends Component {
 
     render(){
         var {
-            isDisplayForm,
             taskEditing, 
             sortBy,
             sortValue
@@ -224,7 +195,6 @@ class App extends Component {
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <TaskList 
                                     onUpdateTask={this.onUpdateTask}
-                                    onUpdateStatus={this.onUpdateStatus}
                                     onDeleteItem={this.onDeleteItem}
                                     onFilter={this.onFilter}
                                     />
