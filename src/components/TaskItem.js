@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { update_status_task } from '../actions';
+import { delete_task, update_status_task,close_form } from '../actions';
 
 class TaskItemm extends Component {
   
@@ -9,8 +9,8 @@ class TaskItemm extends Component {
     }
     
     onDeleteItem=()=>{
-        console.log(this.props.task.id);
-        this.props.onDeleteItem(this.props.task.id)
+        this.props.DeleteItem(this.props.task.id);
+        this.props.OnCloseForm();
     }
 
     onUpdateTask=()=>{
@@ -62,6 +62,12 @@ const mapDispatchToProps=(dispatch,props)=>{
     return{
         UpdateStatus:(id)=>{
             dispatch(update_status_task(id))
+        },
+        DeleteItem:(id)=>{
+            dispatch(delete_task(id))
+        },
+        OnCloseForm:()=>{
+            dispatch(close_form())
         }
     }
 }

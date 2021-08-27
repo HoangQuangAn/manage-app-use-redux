@@ -22,12 +22,12 @@ var findIndex=(tasks,id)=>{
 
 
 var myReducer=(state=initialState, action)=>{
+        
     switch (action.type) {
         case types.LIST_ALL:
             return state;
         
         case types.ADD_TASK:
-            console.log(action);
             var {task}=action;
             var newTask={
                 id:generateID(),
@@ -48,6 +48,12 @@ var myReducer=(state=initialState, action)=>{
             // cloneTask.status=!cloneTask.status;
             // state[index]=cloneTask;
             localStorage.setItem('tasks', JSON.stringify(state))
+            return [...state];
+
+        case types.DELETE_TASK:
+            var index= findIndex(state,action.id);
+            state.splice(index,1);
+            localStorage.setItem('tasks', JSON.stringify(state));
             return [...state];
         default:
             return state;

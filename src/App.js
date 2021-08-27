@@ -54,22 +54,6 @@ class App extends Component {
         console.log(data);
     }
     
-
-    onDeleteItem=(id)=>{
-        var {tasks}=this.state;
-        for( var i = 0; i < tasks.length; i++){ 
-    
-            if ( tasks[i].id=== id) { 
-        
-                tasks.splice(i, 1); 
-            }
-        }
-        this.setState({
-            tasks:tasks
-        })
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-    }
-
     onUpdateTask=(id)=>{
         // Turn On Form
         this.onTurnOnForm();
@@ -162,7 +146,6 @@ class App extends Component {
 
         var elmTaskForm=DisPlayForm===true? <TaskForm 
                                                     taskEditing={taskEditing}
-                                                    onCloseForm={this.onCloseForm}
                                                     onSubmit={this.onSubmit}
                                                     />:'';
         return (
@@ -195,7 +178,6 @@ class App extends Component {
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <TaskList 
                                     onUpdateTask={this.onUpdateTask}
-                                    onDeleteItem={this.onDeleteItem}
                                     onFilter={this.onFilter}
                                     />
                             </div>
