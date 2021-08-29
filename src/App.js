@@ -11,26 +11,10 @@ class App extends Component {
     constructor(props){
         super(props);
         this.state={
-            filter:{
-                name:'',
-                status:-1
-            },
             keyWord:'',
             sortBy:'',
             sortValue : 1    
         }
-    }
-
-
-    onFilter=(filterName,filterStatus)=>{
-        filterStatus=parseInt(filterStatus, 10);
-        this.setState({
-            filter:{
-                name:filterName,
-                status:filterStatus
-            }
-        })
-        
     }
 
     onSearch=(data)=>{
@@ -53,22 +37,6 @@ class App extends Component {
             sortValue
         }= this.state;
         var {DisPlayForm}= this.props;
-       
-        // if(filter){
-        //     if(filter.name){
-        //         tasks=tasks.filter((task)=>{
-        //              return  task.name.toLowerCase().indexOf(filter.name.toLowerCase())!==-1
-        //         })
-        //     }
-        //         // tasks=tasks.filter((task)=>{
-        //         //     if(filter.status ===-1) {
-        //         //         return task
-        //         //     }
-        //         //     else{
-        //         //         return task.status===(filter.status===1 ? true: false);
-        //         //     }
-        //         // })
-        // }
 
         // if(keyWord ){
         //     tasks=tasks.filter((task)=>{
