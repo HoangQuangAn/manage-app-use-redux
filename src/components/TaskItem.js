@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { delete_task, update_status_task,close_form } from '../actions';
+import { delete_task, update_status_task,close_form, open_form, save_task, update_task_button } from '../actions';
 
 class TaskItemm extends Component {
   
@@ -14,7 +14,8 @@ class TaskItemm extends Component {
     }
 
     onUpdateTask=()=>{
-        this.props.onUpdateTask(this.props.task.id)
+        this.props.OnOpenForm();
+        this.props.OnUpdateTaskButton(this.props.task)
     }
     
     render(){
@@ -68,7 +69,14 @@ const mapDispatchToProps=(dispatch,props)=>{
         },
         OnCloseForm:()=>{
             dispatch(close_form())
-        }
+        },
+        OnOpenForm:()=>{
+            dispatch(open_form())
+        },
+        OnUpdateTaskButton:(task)=>{
+            dispatch(update_task_button(task))
+        },
+        
     }
 }
 

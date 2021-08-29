@@ -2,17 +2,12 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import * as action from '../actions';
-import {close_form} from '../actions/index'
+
 
 class TaskForm extends Component {
     constructor(props){
         super(props);
-        this.state={
-            id:'',
-            name:'',
-            status:true
-      
-        }
+        this.state={}
     }
     onHandleInput=(event)=>{
             var name =event.target.name;
@@ -23,6 +18,7 @@ class TaskForm extends Component {
             this.setState({ 
                 [name]:value
             })
+
     }
 
     Clear=()=>{
@@ -32,23 +28,27 @@ class TaskForm extends Component {
         })
     }
 
-    onSubmit=(event)=>{
+    OnSave=(event)=>{
         event.preventDefault();
-        this.props.onAddTask(this.state);
+        this.props.OnSaveTask(this.state);
         this.Clear();
     }
     componentWillMount(){
         var {taskEditing}= this.props;
-        if(taskEditing){
+        if(taskEditing.id && taskEditing){
             this.setState({
                 id:taskEditing.id,
                 name:taskEditing.name,
                 status:taskEditing.status
             })
         }
+        else{
+            this.Clear();
+        }
     }
 
     componentWillReceiveProps(nextProps){
+        // console.log(nextProps);
         if(nextProps && nextProps.taskEditing){
             this.setState({
                 id:nextProps.taskEditing.id,
@@ -57,17 +57,13 @@ class TaskForm extends Component {
             })
         }
         else{
-            this.setState({
-                id:'',
-                name:'',
-                status:true
-            })
+            this.Clear();
         }
     }
 
     
     render(){
-        var {id}=this.state;
+        var {id}=this.state;//props.itemEditing;
         return (
             <div className="panel panel-warning">
                 <div className="panel-heading">
@@ -79,7 +75,7 @@ class TaskForm extends Component {
                     </h3>
                 </div>
                 <div className="panel-body">
-                    <form onSubmit={this.onSubmit}>
+                    <form onSubmit={this.OnSave}>
                         <div className="form-group">
                             <label htmlFor="">Name: </label>
                             <input 
@@ -94,10 +90,10 @@ class TaskForm extends Component {
                         <select 
                             name="status" 
                             id="input"
-                             className="form-control" 
-                             required="required"
-                             value={this.state.status}
-                             onChange={this.onHandleInput} >
+                            className="form-control" 
+                            required="required"
+                            value={this.state.status}
+                            onChange={this.onHandleInput} >
                             <option value={true}>Active</option>
                             <option value={false}>Hide</option>
                         </select>
@@ -122,18 +118,18 @@ class TaskForm extends Component {
 }
 const mapStateToProps=state=>{
     return{
-
+        taskEditing:state.itemEditing
     }
 }
 
 
 const mapDispatchToProps=(dispatch,props)=>{
     return{
-        onAddTask: (task)=>{
-            dispatch(action.add_task(task));
+        OnSaveTask: (task)=>{
+            dispatch(action.save_task(task));
         },
         OnCloseForm:()=>{
-            dispatch(close_form())
+            dispatch(action.close_form())
         }
     }
 }

@@ -12,9 +12,6 @@ class TaskList extends Component {
                             // Hide : 0
         }
     }
-    onUpdateStatus=(id)=>{
-        this.props.onUpdateStatus(id);
-    }
 
     SearchHandle=(event)=>{
         var name = event.target.name;
@@ -39,9 +36,7 @@ class TaskList extends Component {
                 <TaskItemm 
                     key={task.id}
                     index={index}
-                    task={task} 
-                    onDeleteItem={this.props.onDeleteItem}
-                    onUpdateTask={this.props.onUpdateTask}
+                    task={task}
                 />
             )
         });

@@ -12,7 +12,6 @@ class Sort extends Component {
         })
     }
     componentWillReceiveProps(nextProps){
-        // console.log(nextProps);
     }
     onClick=(sortBy, sortValue)=>{
         

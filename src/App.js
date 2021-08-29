@@ -6,12 +6,11 @@ import Control from './components/control';
 import TaskList from './components/TaskList';
 import { connect } from 'react-redux';
 import * as types from './constants/ActionTypes'
-import { close_form, open_form, toggle_form } from './actions';
+import { close_form, open_form } from './actions';
 class App extends Component {
     constructor(props){
         super(props);
         this.state={
-            taskEditing:null,
             filter:{
                 name:'',
                 status:-1
@@ -22,56 +21,6 @@ class App extends Component {
         }
     }
 
-    onSubmit=(data)=>{
-        console.log(data);
-        if(data.id===''){
-            data.id=this.generateID();
-            var {tasks}= this.state;
-            tasks.push(data);
-                this.setState({
-                tasks:tasks
-                })
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-        }
-        else{
-            var {tasks}= this.state;
-            tasks.forEach((task)=>{
-                if(task.id===data.id){
-                    task.name =data.name;
-                    task.status=data.status;
-                }
-            })
-
-            this.setState({
-                tasks:tasks,
-                taskEditing:null,
-                isDisplayForm:false     
-            })
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-        }
-        
-      
-        console.log(data);
-    }
-    
-    onUpdateTask=(id)=>{
-        // Turn On Form
-        this.onTurnOnForm();
-        // Update Form Data;
-        this.UpdateDataOnForm(id);
-
-    }
-
-    UpdateDataOnForm=(id)=>{
-        var {tasks}= this.state;
-        for( var i = 0; i < tasks.length; i++){ 
-            if ( tasks[i].id=== id) { 
-                this.setState({
-                    taskEditing:tasks[i]
-                })
-            }
-        }
-    }
 
     onFilter=(filterName,filterStatus)=>{
         filterStatus=parseInt(filterStatus, 10);
@@ -96,12 +45,10 @@ class App extends Component {
             sortBy:sortBy,
             sortValue:sortValue
         })
-        console.log(this.state);
     }
 
     render(){
         var {
-            taskEditing, 
             sortBy,
             sortValue
         }= this.state;
@@ -144,10 +91,7 @@ class App extends Component {
 
         // }
 
-        var elmTaskForm=DisPlayForm===true? <TaskForm 
-                                                    taskEditing={taskEditing}
-                                                    onSubmit={this.onSubmit}
-                                                    />:'';
+        var elmTaskForm=DisPlayForm===true? <TaskForm/>:'';
         return (
             <div className="container">
                 <div className="text-center">
@@ -161,7 +105,7 @@ class App extends Component {
                     </div>
                     <div className={DisPlayForm===true?"col-xs-8 col-sm-8 col-md-8 col-lg-8":"col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
                         <button type="button" className="btn btn-primary" 
-                            onClick={this.props.OnToggleForm}>
+                            onClick={this.props.OnOpenForm}>
                             <i className="far fa-plus-circle"></i> Add Task
                         </button>
                        
@@ -177,7 +121,6 @@ class App extends Component {
                         <div className="row mt-15">
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <TaskList 
-                                    onUpdateTask={this.onUpdateTask}
                                     onFilter={this.onFilter}
                                     />
                             </div>
@@ -199,13 +142,10 @@ const mapStateToProps = state=>{
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        // OnOpenForm:()=>{
-        //     dispatch(open_form())
-        // }
-     
-        OnToggleForm:()=>{
-            dispatch(toggle_form())
+        OnOpenForm:({})=>{
+            dispatch(open_form({}))
         }
+     
     }
   }
 export default connect(mapStateToProps, mapDispatchToProps)(App);
