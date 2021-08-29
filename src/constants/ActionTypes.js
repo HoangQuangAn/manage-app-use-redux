@@ -6,5 +6,6 @@ export const DELETE_TASK="DELETE_TASK";
 export const SAVE_TASK="SAVE_TASK";
 export const UPDATE_TASK_BUTTON="UPDATE_TASK_BUTTON";
 export const FILTER_TABLE="FILTER_TABLE";
+export const SEARCH="SEARCH";
 
 

@@ -52,4 +52,10 @@ export const filter_task=(filter)=>{
         filter
     }
 }
+export const search=(keyword)=>{
+    return{
+        type:type.SEARCH,
+        keyword
+    }
+}
     
