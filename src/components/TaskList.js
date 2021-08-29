@@ -1,6 +1,8 @@
 import { Component } from 'react';
 import TaskItemm from './TaskItem';
 import { connect } from 'react-redux';
+import { filter_task } from '../actions';
+
 
 class TaskList extends Component {
     constructor(props){
@@ -16,11 +18,11 @@ class TaskList extends Component {
     SearchHandle=(event)=>{
         var name = event.target.name;
         var value= event.target.value;
-
-        this.props.onFilter(
-            name==='filterName'?value:this.state.filterName,
-            name==='filterStatus'?value:this.state.filterStatus
-        )
+        var filter ={
+            name: name==='filterName'?value:this.state.filterName,
+            status: name==='filterStatus'?value:this.state.filterStatus
+        }
+        this.props.OnFilterTable(filter);
         this.setState({
             [name]:value
         })
@@ -31,6 +33,24 @@ class TaskList extends Component {
     render(){
         var {tasks}=this.props;
         var {filterName, filterStatus}= this.state;
+        var filter=this.props.filterTable;
+
+        if(filter){
+            if(filter.name){
+                tasks=tasks.filter((task)=>{
+                     return  task.name.toLowerCase().indexOf(filter.name.toLowerCase())!==-1
+                })
+            }
+                tasks=tasks.filter((task)=>{
+                    if(filter.status ===-1) {
+                        return task
+                    }
+                    else{
+                        return task.status===(filter.status===1 ? true: false);
+                    }
+                })
+        }
+
         var elmTasks=tasks.map((task, index)=>{
             return(
                 <TaskItemm 
@@ -84,8 +104,17 @@ class TaskList extends Component {
 
 const mapStateToProps=(state)=>{
     return{
-        tasks:state.tasks
+        tasks:state.tasks,
+        filterTable:state.filterTable
     }
 };
 
-export default connect(mapStateToProps,null)(TaskList);
+const mapDispatchToProps=(dispatch,props)=>{
+    return{
+        OnFilterTable:(filter)=>{
+            dispatch(filter_task(filter));
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(TaskList);
