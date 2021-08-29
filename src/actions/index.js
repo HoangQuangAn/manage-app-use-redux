@@ -46,3 +46,10 @@ export const update_task_button=(task)=>{
         task
     }
 }
+export const filter_task=(filter)=>{
+    return{
+        type:type.FILTER_TABLE,
+        filter
+    }
+}
+    
