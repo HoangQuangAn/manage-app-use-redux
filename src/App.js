@@ -38,12 +38,7 @@ class App extends Component {
         }= this.state;
         var {DisPlayForm}= this.props;
 
-        // if(keyWord ){
-        //     tasks=tasks.filter((task)=>{
-        //         return  task.name.toLowerCase().indexOf(keyWord.toLowerCase())!==-1
-        //    })
-        // }
-
+       
         // if(sortBy==='name'){
         //     tasks.sort((a,b)=>{
         //         if(a.name>b.name) return sortValue;
